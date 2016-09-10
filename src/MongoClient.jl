@@ -3,7 +3,7 @@ type MongoClient
     _wrap_::Ptr{Void}
 
     MongoClient(uri::AbstractString) = begin
-        uriCStr = bytestring(uri)
+        uriCStr = (uri)
         client = new(
             uri,
             ccall(
@@ -37,7 +37,7 @@ command_simple(
     db_name::AbstractString, # const char
     command::BSONObject#, # const bson_t
     ) = begin
-    dbCStr = bytestring(db_name)
+    dbCStr = (db_name)
     reply = BSONObject() # bson_t
     bsonError = BSONError() # bson_error_t
     ccall(

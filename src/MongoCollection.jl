@@ -5,8 +5,8 @@ type MongoCollection
     name::AbstractString
 
     MongoCollection(client::MongoClient, db::AbstractString, name::AbstractString) = begin
-        dbCStr = bytestring(db)
-        nameCStr = bytestring(name)
+        dbCStr = (db)
+        nameCStr = (name)
         collection = new(
             ccall(
                 (:mongoc_client_get_collection, libmongoc),
@@ -29,7 +29,7 @@ show(io::IO, collection::MongoCollection) = begin
         Ptr{UInt8}, (Ptr{Void},),
         collection._wrap_
         )
-    name = bytestring(nameCStr)
+    name = unsafe_string(nameCStr)
     print(io, "MongoCollection($name)")
 end
 export show
